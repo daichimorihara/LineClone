@@ -10,36 +10,49 @@ import Firebase
 
 struct LoginView: View {
     
+    let didCompleteLoginProcess: () -> ()
+    
     @State private var isLoginMode = false
     @State private var email = ""
     @State private var password = ""
     @State private var image: UIImage?
     @State private var isShowingImagePicker = false
-    @State private var isShowingAlert = false
+    @State private var iconAlert = false
+    @State private var invalidAlert = false
+    @State private var waiting = false
     
     // variable for testing
     @State private var errorMessage = ""
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(spacing: 16) {
-                    loginPicker
-                    loginInput
-                    if !isLoginMode { iconButton }
-                    submitButton
-                    
-                    // text for testing
-                    Text(errorMessage)
+            ZStack {
+                ScrollView {
+                    VStack(spacing: 16) {
+                        loginPicker
+                        loginInput
+                        if !isLoginMode { iconButton }
+                        submitButton
+                        
+                        // text for testing
+                        //Text(errorMessage)
+                    }
+                    .padding(.horizontal)
                 }
-                .padding(.horizontal)
+                if waiting {
+                    Color.white
+                    ProgressView()
+                        .scaleEffect(2)
+                }
             }
             .navigationTitle(isLoginMode ? "Log In" : "Create Account")
-            .fullScreenCover(isPresented: $isShowingImagePicker) {
-                ImagePicker(image: $image)
-                    .ignoresSafeArea()
-            }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
+        .fullScreenCover(isPresented: $isShowingImagePicker) {
+            ImagePicker(image: $image)
+                .ignoresSafeArea()
+        }
+        
 
     }
     
@@ -91,8 +104,10 @@ struct LoginView: View {
         Button {
             if isLoginMode {
                 loginUser()
+                waiting = true
             } else {
                 createAccount()
+                waiting = true
             }
             
         } label: {
@@ -106,31 +121,41 @@ struct LoginView: View {
         .padding()
         .background(.blue)
         .cornerRadius(5)
-        .alert("You must choose your icon image" , isPresented: $isShowingAlert) {
-            Button("OK", role: .cancel) { }
+        .alert("You must choose your icon image" , isPresented: $iconAlert) {
+            Button("OK", role: .cancel) { waiting = false }
         }
+        .alert("Invalid email or password", isPresented: $invalidAlert) {
+            Button("OK", role: .cancel) { waiting = false }
+        }
+        
         
     }
     
     func loginUser() {
         FirebaseManager.shared.auth.signIn(withEmail: email, password: password) { result, error in
             if let error = error {
+                invalidAlert.toggle()
                 self.errorMessage = "Failed to login user: \(error)"
                 print("Failed to login user: \(error)")
                 return
             }
             self.errorMessage = "Successfully logged in user \(result?.user.uid ?? "")"
             print("Successfully logged in user \(result?.user.uid ?? "")")
+            waiting = false
+            
+            didCompleteLoginProcess()
             
         }
     }
     
     func createAccount() {
         if image == nil {
-            isShowingAlert.toggle()
+            iconAlert.toggle()
+            return
         }
         FirebaseManager.shared.auth.createUser(withEmail: email, password: password) { result, error in
             if let error = error {
+                invalidAlert.toggle()
                 print("Failed to create a new account: \(error)")
                 self.errorMessage = "Failed to create a new account: \(error)"
                 return
@@ -177,6 +202,8 @@ struct LoginView: View {
             try document.setData(from: user)
             print("Successfully store user info in firestore")
             self.errorMessage = "Successfully store user info in firestore"
+            waiting = false
+            didCompleteLoginProcess()
         } catch {
             print("Failed to store user info in firestore: \(error)")
             self.errorMessage = "Failed to store user info in firestore: \(error)"
@@ -187,6 +214,6 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(didCompleteLoginProcess: { })
     }
 }

@@ -16,6 +16,6 @@ struct User: Codable, Identifiable {
     let profileImageUrl: URL
     
     var username: String {
-        email.components(separatedBy: "@").first ?? email
+        email.components(separatedBy: "@").first?.capitalizingFirstLetter() ?? email
     }
 }
