@@ -13,6 +13,7 @@ struct FriendView: View {
     @State private var isShowingLogOut = false
     @State private var isSearching = false
     @State private var searchText = ""
+    @State private var isShowingChatLog = false
     
     
     var body: some View {
@@ -98,7 +99,9 @@ struct FriendView: View {
 
     var friendsLists: some View {
         ForEach(vm.users.filter({ $0.username.contains(searchText) || searchText.isEmpty })) { user in
-            VStack {
+            Button {
+                isShowingChatLog.toggle()
+            } label: {
                 HStack(spacing: 16) {
                     WebImage(url: user.profileImageUrl)
                         .resizable()
@@ -110,6 +113,7 @@ struct FriendView: View {
                                     .stroke(.black, lineWidth: 1))
 
                     Text(user.username)
+                        .foregroundColor(.black)
                         .font(.system(size: 24, weight: .semibold))
 
                     Spacer()
@@ -117,7 +121,35 @@ struct FriendView: View {
                 .padding(.horizontal)
                 Divider()
             }
+            .fullScreenCover(isPresented: $isShowingChatLog) {
+                ChatLogView(user: user)
+            }
         }
+        
+//        ForEach(vm.users.filter({ $0.username.contains(searchText) || searchText.isEmpty })) { user in
+//            NavigationLink(destination: ChatLogView(user: user)) {
+//                VStack {
+//                    HStack(spacing: 16) {
+//                        WebImage(url: user.profileImageUrl)
+//                            .resizable()
+//                            .scaledToFill()
+//                            .frame(width: 50, height: 50)
+//                            .clipped()
+//                            .cornerRadius(50)
+//                            .overlay(RoundedRectangle(cornerRadius: 50)
+//                                        .stroke(.black, lineWidth: 1))
+//
+//                        Text(user.username)
+//                            .foregroundColor(.black)
+//                            .font(.system(size: 24, weight: .semibold))
+//
+//                        Spacer()
+//                    }
+//                    .padding(.horizontal)
+//                    Divider()
+//                }
+//            }
+//        }
     }
 }
 

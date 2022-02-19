@@ -31,14 +31,15 @@ struct SearchView: View {
                 HStack {
                     Image(systemName: "magnifyingglass")
                     Spacer()
-                    xButton
+                    if !searchText.isEmpty {
+                        xButton
+                    }
                 }
                 .foregroundColor(.gray.opacity(0.6))
                 .padding(.horizontal, 24)
             )
             .transition(.move(edge: .trailing))
             .animation(.spring())
-            
             
             if isSearching {
                 cancelButton

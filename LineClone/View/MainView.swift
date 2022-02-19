@@ -11,11 +11,13 @@ import SwiftUI
 struct MainView: View {
     @StateObject var vm = MainViewModel()
     
+    
     var body: some View {
         NavigationView {
             VStack {
                 //customNavigationBar
                 // searchBar
+
                 ScrollView {
                     ForEach(1...20, id: \.self) { idx in
                         Text("User")
@@ -24,6 +26,7 @@ struct MainView: View {
                 }
             }
             .navigationBarHidden(true)
+            .navigationTitle("Chats")
         }
     }
 
