@@ -198,6 +198,8 @@ struct LoginView: View {
         let document = FirebaseManager.shared.firestore.collection("users").document(uid)
         let user = User(id: document.documentID, email: email, profileImageUrl: imageProfileUrl)
         
+
+        
         do {
             try document.setData(from: user)
             print("Successfully store user info in firestore")
@@ -209,6 +211,8 @@ struct LoginView: View {
             self.errorMessage = "Failed to store user info in firestore: \(error)"
         }
     }
+    
+
                     
 }
 

@@ -7,49 +7,65 @@
 import SwiftUI
 
 struct ChatLogView: View {
-    @ObservedObject var vm: ChatLogViewModel
+    @ObservedObject var vm2: ChatLogViewModel
     let user: User?
+    @Environment(\.dismiss) var dismiss
+
     
     init(user: User?) {
         self.user = user
-        self.vm = .init(user: user)
+        self.vm2 = .init(user: user)
     }
     
     var body: some View {
         NavigationView {
+            
             VStack {
                 mainBody
+                Button {
+                    vm2.fetchMessages()
+                    vm2.count += 1
+                } label: {
+                    Text("Fetch")
+                }
                 bottomBar
             }
-            .navigationTitle(vm.user?.username ?? "Unknown")
+            .onAppear(perform: vm2.fetchMessages)
+            .navigationTitle(vm2.user?.username ?? "Unknown")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        
+                        dismiss()
                     } label: {
-                        <#code#>
+                        Image(systemName: "chevron.backward")
                     }
                 }
             }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 
 
     var mainBody: some View {
         ScrollViewReader { proxy in
             ScrollView {
-                ForEach(1...21, id: \.self ) { idx in
-                    Text("ibwbri")
-                        .padding()
+                ForEach(vm2.chatMessages) { message in
+                    Text(message.text)
+                }
+                ForEach(1...20, id: \.self) { idx in
+                    Text("OK")
                 }
 
                 HStack { Spacer() }
                 .frame(height: 50)
                 .id("bottom")
             }
+            .padding(.top, 1)
             .background(.blue.opacity(0.1))
-            //.onReceive(<#T##publisher: Publisher##Publisher#>, perform: <#T##(Publisher.Output) -> Void#>)
+            .onReceive(vm2.$count) { _ in
+                
+            }
 
         }
     }
@@ -61,15 +77,14 @@ struct ChatLogView: View {
             ZStack {
                 descriptionPlaceHolder
                 
-                TextEditor(text: $vm.chatText)
+                TextEditor(text: $vm2.chatText)
                     .frame(height: 35)
-                    .opacity(vm.chatText.isEmpty ? 0.1 : 1)
+                    .opacity(vm2.chatText.isEmpty ? 0.1 : 1)
                 
             }
             .background(.gray.opacity(0.1))
             
             Button {
-                
             } label: {
                 Text("Send")
                     .foregroundColor(.white)

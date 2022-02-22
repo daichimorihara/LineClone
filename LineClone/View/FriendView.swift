@@ -14,11 +14,16 @@ struct FriendView: View {
     @State private var isSearching = false
     @State private var searchText = ""
     @State private var isShowingChatLog = false
-    
+    // link version
+    @State private var user: User?
+//    @EnvironmentObject var vm2: ChatLogViewModel
     
     var body: some View {
         NavigationView {
             VStack {
+//                NavigationLink("", isActive: $isShowingChatLog) {
+//                    ChatLogView(user: user)
+//                }
                 settingBar
                 customNavigationBar
                 //searchFunction
@@ -35,7 +40,6 @@ struct FriendView: View {
                     friendsLists
                 }
             }
-            
             .navigationBarHidden(true)
             .fullScreenCover(isPresented: $vm.isCurrentlyLoggedOut) {
                 LoginView(didCompleteLoginProcess: {
@@ -46,6 +50,7 @@ struct FriendView: View {
             }
         }
     }
+        
     
     var settingBar: some View {
         HStack {
@@ -101,6 +106,10 @@ struct FriendView: View {
         ForEach(vm.users.filter({ $0.username.contains(searchText) || searchText.isEmpty })) { user in
             Button {
                 isShowingChatLog.toggle()
+                //link version
+                
+                self.user = user
+                
             } label: {
                 HStack(spacing: 16) {
                     WebImage(url: user.profileImageUrl)
@@ -122,7 +131,7 @@ struct FriendView: View {
                 Divider()
             }
             .fullScreenCover(isPresented: $isShowingChatLog) {
-                ChatLogView(user: user)
+                ChatLogView(user: self.user)
             }
         }
         
@@ -160,8 +169,8 @@ struct FriendView: View {
     
     
 
-struct FriendView_Previews: PreviewProvider {
-    static var previews: some View {
-        FriendView()
-    }
-}
+//struct FriendView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FriendView()
+//    }
+//}

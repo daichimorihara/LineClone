@@ -21,6 +21,7 @@
 		424C2A0727BE1E8800C46747 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424C2A0627BE1E8800C46747 /* LoginView.swift */; };
 		424C2A0927BE1EA400C46747 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424C2A0827BE1EA400C46747 /* User.swift */; };
 		424C2A0D27BE57ED00C46747 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424C2A0C27BE57ED00C46747 /* ImagePicker.swift */; };
+		4289128527C2169300B2885E /* Trial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4289128427C2169300B2885E /* Trial.swift */; };
 		42E0300C27BF323D005ACE9B /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E0300B27BF323D005ACE9B /* MainView.swift */; };
 		42E0300E27BF39A6005ACE9B /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E0300D27BF39A6005ACE9B /* MainViewModel.swift */; };
 		42E0301027BF4F2C005ACE9B /* FriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E0300F27BF4F2C005ACE9B /* FriendView.swift */; };
@@ -44,6 +45,7 @@
 		424C2A0627BE1E8800C46747 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		424C2A0827BE1EA400C46747 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		424C2A0C27BE57ED00C46747 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		4289128427C2169300B2885E /* Trial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trial.swift; sourceTree = "<group>"; };
 		42E0300B27BF323D005ACE9B /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		42E0300D27BF39A6005ACE9B /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		42E0300F27BF4F2C005ACE9B /* FriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendView.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				424C29EC27BE1A4900C46747 /* Assets.xcassets */,
 				424C2A0227BE1CEE00C46747 /* GoogleService-Info.plist */,
 				424C29EE27BE1A4900C46747 /* Preview Content */,
+				4289128427C2169300B2885E /* Trial.swift */,
 			);
 			path = LineClone;
 			sourceTree = "<group>";
@@ -246,6 +249,7 @@
 				42E0B9BE27C087A30083647A /* ChatMessage.swift in Sources */,
 				424C2A0D27BE57ED00C46747 /* ImagePicker.swift in Sources */,
 				42E0B9C227C08E110083647A /* ChatLogView.swift in Sources */,
+				4289128527C2169300B2885E /* Trial.swift in Sources */,
 				424C2A0727BE1E8800C46747 /* LoginView.swift in Sources */,
 				424C2A0927BE1EA400C46747 /* User.swift in Sources */,
 				42E0B9C027C088370083647A /* ChatLogViewModel.swift in Sources */,
